@@ -1,0 +1,22 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1554777122726.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "0",
+    "id" : "93E8351A",
+    "lastKnownWriteTime" : 1554778033,
+    "last_content_update" : 1554778033628,
+    "path" : "~/Documents/Data Analysis/lakit/R/wranglers.R",
+    "project_path" : "R/wranglers.R",
+    "properties" : {
+        "cursorPosition" : "11,9",
+        "scrollLine" : "0"
+    },
+    "relative_order" : 4,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}
