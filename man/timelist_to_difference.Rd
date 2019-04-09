@@ -4,7 +4,7 @@
 \alias{timelist_to_difference}
 \title{timelist_to_difference function}
 \usage{
-timelist_to_difference(timestamps)
+timelist_to_difference(timestamps, ...)
 }
 \arguments{
 \item{timestamps}{a vector of POSIXct}

@@ -17,7 +17,7 @@
 #' @keywords timestamp activity
 #' @export
 #' timelist_to_difference()
-timelist_to_difference <- function(timestamps) {
+timelist_to_difference <- function(timestamps, ...) {
   l = length(timestamps)
   timestamps <- as.numeric(timestamps)
   output <- NULL
@@ -25,7 +25,7 @@ timelist_to_difference <- function(timestamps) {
     output <- append(output, timestamps[n] - timestamps[(n + 1):l])
   }
   output <- lubridate::as.duration(abs(output))
-  return(output)
+  return(data.frame(intervals = output, ...))
 }
 
 #' plot_timestamp_spectrum
@@ -33,14 +33,15 @@ timelist_to_difference <- function(timestamps) {
 #' This takes the output from timelist_to_difference and generates
 #' a frequency density plot of the differences, which is akin to
 #' a freqency ~ amplitude plot used in spectral analysis.
-#' @param timelist_difference a vector of durations (see lubridate) as outputted by the timelist_to_difference function
+#' @param df a data frame that contains at least 1 column called 'intervals' of duration type
 #' @param trans x-axis transformation, defaults to 'log10'
 #' @param ... Extra parameters passed to the geom_density geom
 #' @keywords plot spectrum histogram time frequency
 #' @export
 #' plot_timestamp_spectrum
-plot_timestamp_spectrum <- function(timelist_differences, trans = 'log10', ...) {
-  df <- data.frame(intervals = as.numeric(timelist_differences))
+plot_timestamp_spectrum <- function(df, trans = 'log10', ...) {
+  if("intervals" %!in% names(df)) stop("No column named 'intervals' in data frame")
+  df$intervals = as.numeric(df$intervals) # Histogram didn't like date types
   g <- ggplot(data = df, aes(x = intervals)) +
     geom_density(...) +
     scale_x_continuous(name = "Interval",

@@ -4,14 +4,14 @@
 \alias{plot_timestamp_spectrum}
 \title{plot_timestamp_spectrum}
 \usage{
-plot_timestamp_spectrum(timelist_differences, trans = "log10", ...)
+plot_timestamp_spectrum(df, trans = "log10", ...)
 }
 \arguments{
+\item{df}{a data frame that contains at least 1 column called 'intervals' of duration type}
+
 \item{trans}{x-axis transformation, defaults to 'log10'}
 
 \item{...}{Extra parameters passed to the geom_density geom}
-
-\item{timelist_difference}{a vector of durations (see lubridate) as outputted by the timelist_to_difference function}
 }
 \description{
 This takes the output from timelist_to_difference and generates
