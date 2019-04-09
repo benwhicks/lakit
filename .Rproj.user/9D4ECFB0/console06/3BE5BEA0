@@ -55,3 +55,186 @@ Untracked files:
 
 nothing added to commit but untracked files present (use "git add" to track)
 ]0;~/Documents/Data Analysis/lakitTahrens-Air:lakit tahrenhicks$ git add.[K . 
+]0;~/Documents/Data Analysis/lakitTahrens-Air:lakit tahrenhicks$ git status
+On branch master
+
+No commits yet
+
+Changes to be committed:
+  (use "git rm --cached <file>..." to unstage)
+
+	[32mnew file:   .Rbuildignore[m
+	[32mnew file:   .Rproj.user/9D4ECFB0/console06/3BE5BEA0[m
+	[32mnew file:   .Rproj.user/9D4ECFB0/console06/3BE5BEA0.env[m
+	[32mnew file:   .Rproj.user/9D4ECFB0/console06/INDEX001[m
+	[32mnew file:   .Rproj.user/9D4ECFB0/sources/prop/19FC0F6[m
+	[32mnew file:   .Rproj.user/9D4ECFB0/sources/prop/20CDF767[m
+	[32mnew file:   .Rproj.user/9D4ECFB0/sources/prop/5109F4CA[m
+	[32mnew file:   .Rproj.user/9D4ECFB0/sources/prop/6550D034[m
+	[32mnew file:   .Rproj.user/9D4ECFB0/sources/prop/B49683D[m
+	[32mnew file:   .Rproj.user/9D4ECFB0/sources/prop/D9EE26A8[m
+	[32mnew file:   .Rproj.user/9D4ECFB0/sources/prop/E7603EE7[m
+	[32mnew file:   .Rproj.user/9D4ECFB0/sources/prop/INDEX[m
+	[32mnew file:   .Rproj.user/9D4ECFB0/sources/s-8CE53D53/72C55E9F[m
+	[32mnew file:   .Rproj.user/9D4ECFB0/sources/s-8CE53D53/72C55E9F-contents[m
+	[32mnew file:   .Rproj.user/9D4ECFB0/sources/s-8CE53D53/871E0690-contents[m
+	[32mnew file:   .Rproj.user/9D4ECFB0/sources/s-8CE53D53/93E8351A[m
+	[32mnew file:   .Rproj.user/9D4ECFB0/sources/s-8CE53D53/93E8351A-contents[m
+	[32mnew file:   .Rproj.user/9D4ECFB0/sources/s-8CE53D53/98E0ABC1[m
+	[32mnew file:   .Rproj.user/9D4ECFB0/sources/s-8CE53D53/98E0ABC1-contents[m
+	[32mnew file:   .Rproj.user/9D4ECFB0/sources/s-8CE53D53/B0AD3302-contents[m
+	[32mnew file:   .Rproj.user/9D4ECFB0/sources/s-8CE53D53/F3C9CCF7[m
+	[32mnew file:   .Rproj.user/9D4ECFB0/sources/s-8CE53D53/F3C9CCF7-contents[m
+	[32mnew file:   .Rproj.user/9D4ECFB0/sources/s-8CE53D53/F5710B5-contents[m
+	[32mnew file:   .Rproj.user/9D4ECFB0/sources/s-8CE53D53/lock_file[m
+	[32mnew file:   .Rproj.user/shared/notebooks/patch-chunk-names[m
+	[32mnew file:   .Rproj.user/shared/notebooks/paths[m
+	[32mnew file:   DESCRIPTION[m
+	[32mnew file:   LICENSE.md[m
+	[32mnew file:   NAMESPACE[m
+	[32mnew file:   R/activity.R[m
+	[32mnew file:   R/wranglers.R[m
+	[32mnew file:   lakit.Rproj[m
+	[32mnew file:   man/grapes-not-in-grapes.Rd[m
+	[32mnew file:   man/plot_timestamp_spectrum.Rd[m
+	[32mnew file:   man/timelist_to_difference.Rd[m
+
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git checkout -- <file>..." to discard changes in working directory)
+
+	[31mmodified:   .Rproj.user/9D4ECFB0/console06/3BE5BEA0[m
+
+]0;~/Documents/Data Analysis/lakitTahrens-Air:lakit tahrenhicks$ git commit -m 'first commit'
+[master (root-commit) de3b211] first commit
+ 35 files changed, 1147 insertions(+)
+ create mode 100644 .Rbuildignore
+ create mode 100644 .Rproj.user/9D4ECFB0/console06/3BE5BEA0
+ create mode 100644 .Rproj.user/9D4ECFB0/console06/3BE5BEA0.env
+ create mode 100644 .Rproj.user/9D4ECFB0/console06/INDEX001
+ create mode 100644 .Rproj.user/9D4ECFB0/sources/prop/19FC0F6
+ create mode 100644 .Rproj.user/9D4ECFB0/sources/prop/20CDF767
+ create mode 100644 .Rproj.user/9D4ECFB0/sources/prop/5109F4CA
+ create mode 100644 .Rproj.user/9D4ECFB0/sources/prop/6550D034
+ create mode 100644 .Rproj.user/9D4ECFB0/sources/prop/B49683D
+ create mode 100644 .Rproj.user/9D4ECFB0/sources/prop/D9EE26A8
+ create mode 100644 .Rproj.user/9D4ECFB0/sources/prop/E7603EE7
+ create mode 100644 .Rproj.user/9D4ECFB0/sources/prop/INDEX
+ create mode 100644 .Rproj.user/9D4ECFB0/sources/s-8CE53D53/72C55E9F
+ create mode 100644 .Rproj.user/9D4ECFB0/sources/s-8CE53D53/72C55E9F-contents
+ create mode 100644 .Rproj.user/9D4ECFB0/sources/s-8CE53D53/871E0690-contents
+ create mode 100644 .Rproj.user/9D4ECFB0/sources/s-8CE53D53/93E8351A
+ create mode 100644 .Rproj.user/9D4ECFB0/sources/s-8CE53D53/93E8351A-contents
+ create mode 100644 .Rproj.user/9D4ECFB0/sources/s-8CE53D53/98E0ABC1
+ create mode 100644 .Rproj.user/9D4ECFB0/sources/s-8CE53D53/98E0ABC1-contents
+ create mode 100644 .Rproj.user/9D4ECFB0/sources/s-8CE53D53/B0AD3302-contents
+ create mode 100644 .Rproj.user/9D4ECFB0/sources/s-8CE53D53/F3C9CCF7
+ create mode 100644 .Rproj.user/9D4ECFB0/sources/s-8CE53D53/F3C9CCF7-contents
+ create mode 100644 .Rproj.user/9D4ECFB0/sources/s-8CE53D53/F5710B5-contents
+ create mode 100644 .Rproj.user/9D4ECFB0/sources/s-8CE53D53/lock_file
+ create mode 100644 .Rproj.user/shared/notebooks/patch-chunk-names
+ create mode 100644 .Rproj.user/shared/notebooks/paths
+ create mode 100644 DESCRIPTION
+ create mode 100644 LICENSE.md
+ create mode 100644 NAMESPACE
+ create mode 100644 R/activity.R
+ create mode 100644 R/wranglers.R
+ create mode 100644 lakit.Rproj
+ create mode 100644 man/grapes-not-in-grapes.Rd
+ create mode 100644 man/plot_timestamp_spectrum.Rd
+ create mode 100644 man/timelist_to_difference.Rd
+]0;~/Documents/Data Analysis/lakitTahrens-Air:lakit tahrenhicks$ git stau[Ktus
+On branch master
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git checkout -- <file>..." to discard changes in working directory)
+
+	[31mmodified:   .Rproj.user/9D4ECFB0/console06/3BE5BEA0[m
+
+no changes added to commit (use "git add" and/or "git commit -a")
+]0;~/Documents/Data Analysis/lakitTahrens-Air:lakit tahrenhicks$ git push origin master
+fatal: cannot run rpostback-askpass: No such file or directory
+Username for 'https://github.com': benwhicks@gmail.com
+fatal: cannot run rpostback-askpass: No such file or directory
+Password for 'https://benwhicks@gmail.com@github.com': 
+Enumerating objects: 38, done.
+Counting objects:   2% (1/38)   Counting objects:   5% (2/38)   Counting objects:   7% (3/38)   Counting objects:  10% (4/38)   Counting objects:  13% (5/38)   Counting objects:  15% (6/38)   Counting objects:  18% (7/38)   Counting objects:  21% (8/38)   Counting objects:  23% (9/38)   Counting objects:  26% (10/38)   Counting objects:  28% (11/38)   Counting objects:  31% (12/38)   Counting objects:  34% (13/38)   Counting objects:  36% (14/38)   Counting objects:  39% (15/38)   Counting objects:  42% (16/38)   Counting objects:  44% (17/38)   Counting objects:  47% (18/38)   Counting objects:  50% (19/38)   Counting objects:  52% (20/38)   Counting objects:  55% (21/38)   Counting objects:  57% (22/38)   Counting objects:  60% (23/38)   Counting objects:  63% (24/38)   Counting objects:  65% (25/38)   Counting objects:  68% (26/38)   Counting objects:  71% (27/38)   Counting objects:  73% (28/38)   Counting objects:  76% (29/38)   Counting objects:  78% (30/38)   Counting objects:  81% (31/38)   Counting objects:  84% (32/38)   Counting objects:  86% (33/38)   Counting objects:  89% (34/38)   Counting objects:  92% (35/38)   Counting objects:  94% (36/38)   Counting objects:  97% (37/38)   Counting objects: 100% (38/38)   Counting objects: 100% (38/38), done.
+Delta compression using up to 4 threads
+Compressing objects:   2% (1/34)   Compressing objects:   5% (2/34)   Compressing objects:   8% (3/34)   Compressing objects:  11% (4/34)   Compressing objects:  14% (5/34)   Compressing objects:  17% (6/34)   Compressing objects:  20% (7/34)   Compressing objects:  23% (8/34)   Compressing objects:  26% (9/34)   Compressing objects:  29% (10/34)   Compressing objects:  32% (11/34)   Compressing objects:  35% (12/34)   Compressing objects:  38% (13/34)   Compressing objects:  41% (14/34)   Compressing objects:  44% (15/34)   Compressing objects:  47% (16/34)   Compressing objects:  50% (17/34)   Compressing objects:  52% (18/34)   Compressing objects:  55% (19/34)   Compressing objects:  58% (20/34)   Compressing objects:  61% (21/34)   Compressing objects:  64% (22/34)   Compressing objects:  67% (23/34)   Compressing objects:  70% (24/34)   Compressing objects:  73% (25/34)   Compressing objects:  76% (26/34)   Compressing objects:  79% (27/34)   Compressing objects:  82% (28/34)   Compressing objects:  85% (29/34)   Compressing objects:  88% (30/34)   Compressing objects:  91% (31/34)   Compressing objects:  94% (32/34)   Compressing objects:  97% (33/34)   Compressing objects: 100% (34/34)   Compressing objects: 100% (34/34), done.
+Writing objects:   2% (1/38)   Writing objects:   5% (2/38)   Writing objects:   7% (3/38)   Writing objects:  10% (4/38)   Writing objects:  13% (5/38)   Writing objects:  15% (6/38)   Writing objects:  18% (7/38)   Writing objects:  21% (8/38)   Writing objects:  23% (9/38)   Writing objects:  26% (10/38)   Writing objects:  28% (11/38)   Writing objects:  31% (12/38)   Writing objects:  34% (13/38)   Writing objects:  36% (14/38)   Writing objects:  39% (15/38)   Writing objects:  42% (16/38)   Writing objects:  44% (17/38)   Writing objects:  47% (18/38)   Writing objects:  50% (19/38)   Writing objects:  52% (20/38)   Writing objects:  55% (21/38)   Writing objects:  57% (22/38)   Writing objects:  60% (23/38)   Writing objects:  63% (24/38)   Writing objects:  65% (25/38)   Writing objects:  68% (26/38)   Writing objects:  71% (27/38)   Writing objects:  73% (28/38)   Writing objects:  76% (29/38)   Writing objects:  78% (30/38)   Writing objects:  81% (31/38)   Writing objects:  84% (32/38)   Writing objects:  86% (33/38)   Writing objects:  89% (34/38)   Writing objects:  92% (35/38)   Writing objects:  94% (36/38)   Writing objects:  97% (37/38)   Writing objects: 100% (38/38)   Writing objects: 100% (38/38), 19.61 KiB | 334.00 KiB/s, done.
+Total 38 (delta 4), reused 0 (delta 0)
+remote: Resolving deltas:   0% (0/4)   [Kremote: Resolving deltas:  75% (3/4)   [Kremote: Resolving deltas: 100% (4/4)   [Kremote: Resolving deltas: 100% (4/4), done.[K
+To https://github.com/benwhicks/lakit.git
+ * [new branch]      master -> master
+]0;~/Documents/Data Analysis/lakitTahrens-Air:lakit tahrenhicks$ echo "# lakit" >> README.md
+]0;~/Documents/Data Analysis/lakitTahrens-Air:lakit tahrenhicks$ ls
+DESCRIPTION NAMESPACE   README.md   [34mman[39;49m[0m
+LICENSE.md  [34mR[39;49m[0m           lakit.Rproj [34mtests[39;49m[0m
+]0;~/Documents/Data Analysis/lakitTahrens-Air:lakit tahrenhicks$ more README.md 
+[?1h=# lakit
+[7mREADME.md (END)[27m[K[K[K[?1l>]0;~/Documents/Data Analysis/lakitTahrens-Air:lakit tahrenhicks$ echo "" >> README.md 
+]0;~/Documents/Data Analysis/lakitTahrens-Air:lakit tahrenhicks$ more README.md 
+[?1h=# lakit
+
+[7mREADME.md (END)[27m[K[K[K[?1l>]0;~/Documents/Data Analysis/lakitTahrens-Air:lakit tahrenhicks$ echo "A collection of functions built with Learning Analytics in  mind"
+A collection of functions built with Learning Analytics in mind
+]0;~/Documents/Data Analysis/lakitTahrens-Air:lakit tahrenhicks$ echo "A collection of functions built with Learning Analytics in  mind" >> README.md 
+]0;~/Documents/Data Analysis/lakitTahrens-Air:lakit tahrenhicks$ more README.md 
+[?1h=# lakit
+
+A collection of functions built with Learning Analytics in mind
+[7mREADME.md (END)[27m[K[K[K[?1l>]0;~/Documents/Data Analysis/lakitTahrens-Air:lakit tahrenhicks$ git status
+On branch master
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git checkout -- <file>..." to discard changes in working directory)
+
+	[31mmodified:   .Rproj.user/9D4ECFB0/console06/3BE5BEA0[m
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+
+	[31mREADME.md[m
+
+no changes added to commit (use "git add" and/or "git commit -a")
+]0;~/Documents/Data Analysis/lakitTahrens-Air:lakit tahrenhicks$ more .giti[K[K[K[K[K[K[K[K[K[Kecho "*.[K[K.*" >> .gitignore
+]0;~/Documents/Data Analysis/lakitTahrens-Air:lakit tahrenhicks$ git status
+On branch master
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git checkout -- <file>..." to discard changes in working directory)
+
+	[31mmodified:   .Rproj.user/9D4ECFB0/console06/3BE5BEA0[m
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+
+	[31mREADME.md[m
+
+no changes added to commit (use "git add" and/or "git commit -a")
+]0;~/Documents/Data Analysis/lakitTahrens-Air:lakit tahrenhicks$ echo "!.gitignore" >> .gitignore
+bash: !.gitignore: event not found
+Tahrens-Air:lakit tahrenhicks$ nano .gitig
+>]0;~/Documents/Data Analysis/lakitTahrens-Air:lakit tahrenhicks$ nano .gitignore 
+>]0;~/Documents/Data Analysis/lakitTahrens-Air:lakit tahrenhicks$ more .gitignore 
+[?1h=.*
+!.gitignore
+[7m.gitignore (END)[27m[K[K[K[?1l>]0;~/Documents/Data Analysis/lakitTahrens-Air:lakit tahrenhicks$ git status
+On branch master
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git checkout -- <file>..." to discard changes in working directory)
+
+	[31mmodified:   .Rproj.user/9D4ECFB0/console06/3BE5BEA0[m
+	[31mmodified:   .Rproj.user/9D4ECFB0/console06/INDEX001[m
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+
+	[31m.gitignore[m
+	[31mREADME.md[m
+
+no changes added to commit (use "git add" and/or "git commit -a")
+]0;~/Documents/Data Analysis/lakitTahrens-Air:lakit tahrenhicks$ git rm .Rproj.user/
+fatal: not removing '.Rproj.user/' recursively without -r
+]0;~/Documents/Data Analysis/lakitTahrens-Air:lakit tahrenhicks$ git add .
