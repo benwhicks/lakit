@@ -12,7 +12,11 @@
 #' into a collection of all the differences between each timestamp
 #' with each other. The idea is to head towards a frequency distribution
 #' of the time series, but rather than using a signal it is using a
-#' sequences of events or impulses
+#' sequences of events or impulses.
+#'
+#' The other arguments are passed to the data.frame function and need to be
+#' of the form: var = "value", as you might want to pass through an identifier
+#' such as a student id or content id with the table of differences for later use
 #' @param timestamps a vector of POSIXct
 #' @keywords timestamp activity
 #' @export
@@ -24,8 +28,32 @@ timelist_to_difference <- function(timestamps, ...) {
   for (n in 1:(l - 1)) {
     output <- append(output, timestamps[n] - timestamps[(n + 1):l])
   }
+  if (min(output) == 0) {
+    next_min <- min(output[output > 0])
+    output <- c(output[output > 0], rep(next_min, length(output[output == 0])))
+  }
   output <- lubridate::as.duration(abs(output))
   return(data.frame(intervals = output, ...))
+}
+
+#' timelist_to_difference_assembler
+#'
+#' @param timestamps a vector of timestamp
+#' @param ids a corresponding vector of ids, matching to the timestamps
+#' @keywords timestamp activity
+#' @export
+#' timelist_to_difference_assembler()
+timelist_to_difference_assembler <- function(timestamps, ids) {
+  df <- data.frame(timestamp = timestamps, id = ids)
+  u_ids <- unique(ids)
+  output <- data.frame()
+  for (this_id in u_ids) {
+    df_for_id <- df %>% filter(id == this_id)
+    output <- rbind(timelist_to_difference(df_for_id$timestamp, id = this_id), output)
+    print(paste0("Completed ", which(this_id == u_ids), " of ", length(u_ids)))
+    flush.console()
+  }
+  return(output)
 }
 
 #' plot_timestamp_spectrum
@@ -38,16 +66,18 @@ timelist_to_difference <- function(timestamps, ...) {
 #' @param ... Extra parameters passed to the geom_density geom
 #' @keywords plot spectrum histogram time frequency
 #' @export
-#' plot_timestamp_spectrum
+#' plot_timestamp_spectrum()
 plot_timestamp_spectrum <- function(df, trans = 'log10', ...) {
+  # This function could use some optimisation
   if("intervals" %!in% names(df)) stop("No column named 'intervals' in data frame")
   df$intervals = as.numeric(df$intervals) # Histogram didn't like date types
+  df <- df %>% filter(intervals > 0) # ignoring 0 duration events
   g <- ggplot(data = df, aes(x = intervals)) +
-    geom_density(...) +
+    geom_density() +
     scale_x_continuous(name = "Interval",
                        trans = trans,
-                       breaks = c(1,60, 60*60, 60*60*24, 60*60*24*7),
-                       labels = c("1 Second","1 Minute", "1 Hour", "1 Day", "1 Week")) +
+                       breaks = c(1,60, 60*60, 60*60*24, 60*60*24*7, 60*60*24*7*52/12.0, 60*60*24*7*26),
+                       labels = c("1 Second","1 Minute", "1 Hour", "1 Day", "1 Week", "1 month", "6 months")) +
     scale_y_continuous(name = "Amplitude") +
     theme_minimal() +
     theme(axis.line.y = element_blank(),
