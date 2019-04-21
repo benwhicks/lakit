@@ -19,9 +19,9 @@
 #' such as a student id or content id with the table of differences for later use
 #' @param timestamps a vector of POSIXct
 #' @keywords timestamp activity
-#' @export
-#' timelist_to_difference()
+#' @export timelist_to_difference
 timelist_to_difference <- function(timestamps, ...) {
+  # This function could use some optimisation
   l = length(timestamps)
   timestamps <- as.numeric(timestamps)
   output <- NULL
@@ -32,7 +32,7 @@ timelist_to_difference <- function(timestamps, ...) {
     next_min <- min(output[output > 0])
     output <- c(output[output > 0], rep(next_min, length(output[output == 0])))
   }
-  output <- lubridate::as.duration(abs(output))
+  output <- as.duration(abs(output))
   return(data.frame(intervals = output, ...))
 }
 
@@ -41,8 +41,7 @@ timelist_to_difference <- function(timestamps, ...) {
 #' @param timestamps a vector of timestamp
 #' @param ids a corresponding vector of ids, matching to the timestamps
 #' @keywords timestamp activity
-#' @export
-#' timelist_to_difference_assembler()
+#' @export timelist_to_difference_assembler
 timelist_to_difference_assembler <- function(timestamps, ids) {
   df <- data.frame(timestamp = timestamps, id = ids)
   u_ids <- unique(ids)
@@ -65,19 +64,18 @@ timelist_to_difference_assembler <- function(timestamps, ids) {
 #' @param trans x-axis transformation, defaults to 'log10'
 #' @param ... Extra parameters passed to the geom_density geom
 #' @keywords plot spectrum histogram time frequency
-#' @export
-#' plot_timestamp_spectrum()
+#' @export plot_timestamp_spectrum
 plot_timestamp_spectrum <- function(df, trans = 'log10', ...) {
   # This function could use some optimisation
   if("intervals" %!in% names(df)) stop("No column named 'intervals' in data frame")
   df$intervals = as.numeric(df$intervals) # Histogram didn't like date types
   df <- df %>% filter(intervals > 0) # ignoring 0 duration events
-  g <- ggplot(data = df, aes(x = intervals)) +
+  g <- ggplot(data = df, aes(x = intervals, colour = intervals)) +
     geom_density() +
     scale_x_continuous(name = "Interval",
                        trans = trans,
-                       breaks = c(1,60, 60*60, 60*60*24, 60*60*24*7, 60*60*24*7*52/12.0, 60*60*24*7*26),
-                       labels = c("1 Second","1 Minute", "1 Hour", "1 Day", "1 Week", "1 month", "6 months")) +
+                       breaks = c(0,1,60, 60*60, 60*60*24, 60*60*24*7, 60*60*24*7*52/12.0, 60*60*24*7*26),
+                       labels = c("0","1 Second","1 Minute", "1 Hour", "1 Day", "1 Week", "1 month", "6 months")) +
     scale_y_continuous(name = "Amplitude") +
     theme_minimal() +
     theme(axis.line.y = element_blank(),
@@ -99,8 +97,7 @@ plot_timestamp_spectrum <- function(df, trans = 'log10', ...) {
 #' @param content A character vector of the field names that define the content
 #' @param max_time_interval The cutoff for duration of any session (duration data type, accepts recognised strings). Any session registering above this is filtered out as it is likely to be someone just logging in and then walking away. Defaults to 2 days.
 #' @keywords activity accumulator aa log summary
-#' @export
-
+#' @export activity_summary
 activity_summary <- function(aa,
                              content = c("event", "handle", "data", "content_pk1"),
                              max_time_interval = "2 days") {
@@ -121,8 +118,8 @@ activity_summary <- function(aa,
   session_summary <- aa_sorted %>%
     group_by(session, id) %>%
     summarise(clicks = n(),
-              time = lubridate::as.duration(sum(duration))) %>%
-    filter(time < lubridate::as.duration(max_time_interval)) %>%
+              time = as.duration(sum(duration))) %>%
+    filter(time < as.duration(max_time_interval)) %>%
     ungroup() %>%
     summarise(total_accesses = n(),
               mean_clicks_per_access = mean(clicks, na.rm = T),

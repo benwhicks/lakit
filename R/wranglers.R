@@ -21,7 +21,7 @@
 #' various data types.
 #' @param candidates list of values to choose from
 #' @keywords best bet na remove filter
-#' @export
+#' @export best_bet
 best_bet <- function(candidates) {
   l <- candidates[!is.na(candidates)]
   if (length(l) == 0) {
