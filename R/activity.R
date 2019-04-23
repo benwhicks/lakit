@@ -84,7 +84,51 @@ plot_timestamp_spectrum <- function(df, trans = 'log10', ...) {
   return(g)
 }
 
-#' activity_summary
+#' aa_summary_by_user
+#'
+#' This summarises 'activity' data, according to the fields:
+#' id : A unique key for the user
+#' session : A unique key for each 'session', which denotes a single login from a single user
+#' timestamp : When the event occured
+#'
+#' The defaults have been setup to work with Blackboard DDA report data, hence some of the strange names.
+#' @param aa dataframe of activity data. Must include column names corresponding to the other params
+#' @param max_time_interval The cutoff for duration of any session (duration data type, accepts recognised strings). Any session registering above this is filtered out as it is likely to be someone just logging in and then walking away. Defaults to 2 days.
+#' @keywords activity accumulator aa log summary user
+#' @export aa_summary_by_user
+aa_summary_by_user <- function(aa,
+                             max_time_interval = "2 days") {
+  if ("id" %!in% names(aa)) return("id field not in names of data frame")
+  if ("session" %!in% names(aa)) return("session field not in names of data frame")
+  if ("timestamp" %!in% names(aa)) return("timestamp field not in names of data frame")
+
+  aa_sorted <- aa %>%
+    filter(!is.na(id), session > 0) %>%
+    select(id, session, timestamp) %>% # selecting only what is required
+    arrange(id, session, timestamp) # needs to be in order for duration calculations
+
+  aa_sorted$duration <- c(aa_sorted$timestamp[2:nrow(aa_sorted)] - aa_sorted$timestamp[1:(nrow(aa_sorted)-1)],0)
+  aa_sorted$same_session <- as.numeric(c(aa_sorted[2:nrow(aa_sorted),"session"] == aa_sorted[1:(nrow(aa_sorted)-1),"session"], FALSE))
+  aa_sorted <- aa_sorted %>% mutate(duration = as.numeric(duration) * same_session) # in seconds
+  aa_sorted$same_session <- NULL
+
+  user_summary <- aa_sorted %>%
+    select(id, session, duration) %>%
+    group_by(id, session) %>%
+    summarise(clicks = n(),
+              time = sum(duration)) %>%
+    filter(as.duration(time) < as.duration(max_time_interval)) %>%
+    summarise(accesses = n(),
+              mean_clicks_per_access = mean(clicks, na.rm = T),
+              sd_clicks = as.duration(sd(clicks, na.rm = T)),
+              median_time_per_access = as.duration(median(time, na.rm = T)),
+              sd_time = as.duration(sd(time, na.rm = T)),
+              total_time = as.duration(sum(time, na.rm = T)))
+
+  return(user_summary)
+  }
+
+#' aa_summary_by_content
 #'
 #' This summarises 'activity' data, according to the fields:
 #' id : A unique key for the user
@@ -96,11 +140,11 @@ plot_timestamp_spectrum <- function(df, trans = 'log10', ...) {
 #' @param aa dataframe of activity data. Must include column names corresponding to the other params
 #' @param content A character vector of the field names that define the content
 #' @param max_time_interval The cutoff for duration of any session (duration data type, accepts recognised strings). Any session registering above this is filtered out as it is likely to be someone just logging in and then walking away. Defaults to 2 days.
-#' @keywords activity accumulator aa log summary
-#' @export activity_summary
-activity_summary <- function(aa,
-                             content = c("event", "handle", "data", "content_pk1"),
-                             max_time_interval = "2 days") {
+#' @keywords activity accumulator aa log summary user
+#' @export aa_summary_by_content
+aa_summary_by_content <- function(aa,
+                               content = c("event", "handle", "data", "content_pk1"),
+                               max_time_interval = "2 days") {
   if ("id" %!in% names(aa)) return("id field not in names of data frame")
   if ("session" %!in% names(aa)) return("session field not in names of data frame")
   if ("timestamp" %!in% names(aa)) return("timestamp field not in names of data frame")
@@ -108,6 +152,46 @@ activity_summary <- function(aa,
   aa_sorted <- aa %>%
     filter(!is.na(id)) %>%
     select(c("id", "session", "timestamp", content)) %>% # selecting only what is required
+    arrange(id, session, timestamp) # needs to be in order for duration calculations
+
+  aa_sorted$duration <- c(aa_sorted$timestamp[2:nrow(aa_sorted)] - aa_sorted$timestamp[1:(nrow(aa_sorted)-1)],0)
+  aa_sorted$same_session <- as.numeric(c(aa_sorted[2:nrow(aa_sorted),"session"] == aa_sorted[1:(nrow(aa_sorted)-1),"session"], FALSE))
+  aa_sorted <- aa_sorted %>% mutate(duration = as.numeric(duration) * same_session) # in seconds
+  aa_sorted$same_session <- NULL
+
+  content_summary <- aa_sorted %>%
+    group_by_at(content) %>%
+    summarise(hits = n(),
+              median_time = median(duration, na.rm = T),
+              total_time = sum(duration, na.rm = T)) %>%
+    arrange(desc(hits))
+
+  return(content_summary)
+}
+
+#' aa_summary_by_session (session one)
+#'
+#' This summarises 'activity' data, according to the fields:
+#' id : A unique key for the user
+#' session : A unique key for each 'session', which denotes a single login from a single user
+#' timestamp : When the event occured
+#' content : A collection of field names that describe what was accessed
+#'
+#' The defaults have been setup to work with Blackboard DDA report data, hence some of the strange names.
+#' @param aa dataframe of activity data. Must include column names corresponding to the other params
+#' @param max_time_interval The cutoff for duration of any session (duration data type, accepts recognised strings). Any session registering above this is filtered out as it is likely to be someone just logging in and then walking away. Defaults to 2 days.
+#' @keywords activity accumulator aa log summary user
+#' @export aa_summary_by_session
+aa_summary_by_session <- function(aa,
+                               content = c("event", "handle", "data", "content_pk1"),
+                               max_time_interval = "2 days") {
+  if ("id" %!in% names(aa)) return("id field not in names of data frame")
+  if ("session" %!in% names(aa)) return("session field not in names of data frame")
+  if ("timestamp" %!in% names(aa)) return("timestamp field not in names of data frame")
+  if (any(content %!in% names(aa))) return("content fields missing from data frame")
+  aa_sorted <- aa %>%
+    filter(!is.na(id)) %>%
+    select(id, session, timestamp) %>% # selecting only what is required
     arrange(id, session, timestamp) # needs to be in order for duration calculations
 
   aa_sorted$duration <- c(aa_sorted$timestamp[2:nrow(aa_sorted)] - aa_sorted$timestamp[1:(nrow(aa_sorted)-1)],0)
@@ -125,23 +209,6 @@ activity_summary <- function(aa,
               mean_clicks_per_access = mean(clicks, na.rm = T),
               median_time_per_access = median(time))
 
-  content_summary <- aa_sorted %>%
-    group_by_at(content) %>%
-    summarise(hits = n(),
-              median_time = median(duration, na.rm = T),
-              total_time = sum(duration, na.rm = T)) %>%
-    arrange(desc(hits))
+  return(session_summary)
+}
 
-  user_summary <- aa_sorted %>%
-    group_by(id, session) %>%
-    summarise(clicks = n(),
-              time = max(timestamp) - min(timestamp)) %>%
-    summarise(accesses = n(),
-              mean_clicks_per_access = mean(clicks, na.rm = T),
-              sd_clicks = sd(clicks, na.rm = T),
-              median_time_per_access = median(time, na.rm = T),
-              sd_time = sd(time, na.rm = T),
-              total_time = sum(time, na.rm = T))
-
-  return(list(session_summary, content_summary, user_summary))
-  }
