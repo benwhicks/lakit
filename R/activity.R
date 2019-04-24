@@ -103,7 +103,7 @@ aa_summary_by_user <- function(aa,
   if ("timestamp" %!in% names(aa)) return("timestamp field not in names of data frame")
 
   aa_sorted <- aa %>%
-    filter(!is.na(id), session > 0) %>%
+    filter(!is.na(id), as.numeric(session) > 0) %>%
     select(id, session, timestamp) %>% # selecting only what is required
     arrange(id, session, timestamp) # needs to be in order for duration calculations
 
@@ -120,7 +120,7 @@ aa_summary_by_user <- function(aa,
     filter(as.duration(time) < as.duration(max_time_interval)) %>%
     summarise(accesses = n(),
               mean_clicks_per_access = mean(clicks, na.rm = T),
-              sd_clicks = as.duration(sd(clicks, na.rm = T)),
+              sd_clicks = sd(clicks, na.rm = T),
               median_time_per_access = as.duration(median(time, na.rm = T)),
               sd_time = as.duration(sd(time, na.rm = T)),
               total_time = as.duration(sum(time, na.rm = T)))
