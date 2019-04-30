@@ -39,18 +39,18 @@ is_duration_string <- function(x) {
 }
 
 
-#' to_duration_from_string
+#' as_duration_from_string
 #'
 #' Gets strings that were durations and returns a duration
 #' @param x a string, of form "310s (~5.17 minutes)" form
 #' @keywords duration character clean tidy
-#' @export to_duration_from_string
-to_duration_from_string <- function(x) {
+#' @export as_duration_from_string
+as_duration_from_string <- function(x) {
   x <- str_remove(x, " .*$") # removes everything after the space
   return(as.duration(x))
 }
 
-#' to_matrix_greedily
+#' as_matrix_greedily
 #'
 #' Takes a data frame and tries to return a numeric matrix, first
 #' converting as many fields that might be possible numerics first.
@@ -58,19 +58,20 @@ to_duration_from_string <- function(x) {
 #' to be included as needed
 #' @param df data frame to be coerced into numeric
 #' @keywords dataframe coerce numeric matrix
-#' @export to_matrix_greedily
-to_matrix_greedily <- function(df) {
-  # Fix durations first
+#' @export as_matrix_greedily
+as_matrix_greedily <- function(df) {
+  # Find numerics first
+  if (any(sapply(df, is_numericable))) {
+    numdf <- df %>%
+      select_if(is_numericable) %>%
+      mutate_all(as.numeric)
+    df <- df %>% select(names(df) %!in% names(numdf))
+  }
+  # Fix durations
   if (any(sapply(df, is_duration_string))) {
     durdf <- df %>%
       select_if(is_duration_string) %>%
       mutate_all(to_duration_from_string) %>%
-      mutate_all(as.numeric)
-  }
-  # Find other numerics
-  if (any(sapply(df, is_numericable))) {
-    numdf <- df %>%
-      select_if(is_numericable) %>%
       mutate_all(as.numeric)
   }
   return(bind_cols(numdf, durdf))
