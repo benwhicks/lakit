@@ -14,5 +14,13 @@ timelist_to_difference_assembler(timestamps, ids)
 \description{
 timelist_to_difference_assembler
 }
+\examples{
+aa <- data.frame(ids = rep(c(1,2,3,4),25), ts = as.POSIXlt.POSIXct(sample(10000000:11100000 , 100, replace = FALSE)))
+
+}
+\seealso{
+Other timelist: \code{\link{timelist_to_difference}}
+}
+\concept{timelist}
 \keyword{activity}
 \keyword{timestamp}

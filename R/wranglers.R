@@ -58,7 +58,7 @@ as_duration_from_string <- function(x) {
 #' to be included as needed
 #' @param df data frame to be coerced into numeric
 #' @keywords dataframe coerce numeric matrix
-#' @export as_matrix_greedily
+#' @export
 as_matrix_greedily <- function(df) {
   # Find numerics first
   if (any(sapply(df, is_numericable))) {
@@ -71,7 +71,7 @@ as_matrix_greedily <- function(df) {
   if (any(sapply(df, is_duration_string))) {
     durdf <- df %>%
       select_if(is_duration_string) %>%
-      mutate_all(to_duration_from_string) %>%
+      mutate_all(as_duration_from_string) %>%
       mutate_all(as.numeric)
   }
   return(bind_cols(numdf, durdf))

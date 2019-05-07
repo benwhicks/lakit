@@ -4,7 +4,6 @@
 # columns is a timestamp, where the timestamp is of
 # a time or date format and denotes when the event happened
 
-# testTimes <- as.POSIXlt.POSIXct(sample(10000000:11100000 , 100, replace = FALSE))
 
 #' timelist_to_difference function
 #'
@@ -20,6 +19,10 @@
 #' @param timestamps a vector of POSIXct
 #' @keywords timestamp activity
 #' @export timelist_to_difference
+#' @family timelist
+#' @examples
+#' testTimes <- as.POSIXlt.POSIXct(sample(10000000:11100000 , 100, replace = FALSE))
+#' timelist_to_difference(testTimes)
 timelist_to_difference <- function(timestamps, ...) {
   # This function could use some optimisation
   l = length(timestamps)
@@ -41,7 +44,11 @@ timelist_to_difference <- function(timestamps, ...) {
 #' @param timestamps a vector of timestamp
 #' @param ids a corresponding vector of ids, matching to the timestamps
 #' @keywords timestamp activity
+#' @family timelist
 #' @export timelist_to_difference_assembler
+#' @examples
+#' aa <- data.frame(ids = rep(c(1,2,3,4),25), ts = as.POSIXlt.POSIXct(sample(10000000:11100000 , 100, replace = FALSE)))
+#'
 timelist_to_difference_assembler <- function(timestamps, ids) {
   df <- data.frame(timestamp = timestamps, id = ids)
   u_ids <- unique(ids)
@@ -69,9 +76,12 @@ plot_timestamp_spectrum <- function(df, trans = 'log10', ...) {
   # This function could use some optimisation
   if("intervals" %!in% names(df)) stop("No column named 'intervals' in data frame")
   df$intervals = as.numeric(df$intervals) # Histogram didn't like date types
-  df <- df %>% filter(intervals > 0) # ignoring 0 duration events
+
+  df <- df %>%
+    filter(intervals > 0) # ignoring 0 duration events
+
   g <- ggplot(data = df, aes(x = intervals, colour = intervals)) +
-    geom_density() +
+    geom_density(aes(...)) +
     scale_x_continuous(name = "Interval",
                        trans = trans,
                        breaks = c(0,1,60, 60*60, 60*60*24, 60*60*24*7, 60*60*24*7*52/12.0, 60*60*24*7*26),

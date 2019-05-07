@@ -14,7 +14,7 @@
 #' @keywords heatmap clustering
 #' @export heatmap_lakit
 heatmap_lakit <- function(x, cluster_method = "average", distance_metric = "euclidian", k = 1, ...) {
-  x <- to_matrix_greedily(df)
+  x <- as_matrix_greedily(df)
   x <- scale(x) # hclust and heatmaps only make sense with normed data
   col_branches
   heatmap.2(x,
@@ -37,7 +37,7 @@ heatmap_lakit <- function(x, cluster_method = "average", distance_metric = "eucl
 #' @keywords dendrogram clustering
 #' @export dendrogram_lakit
 dendrogram_lakit <- function(x, cluster_method = "average", distance_metric = "euclidian", k = 1, ...) {
-  x <- to_matrix_greedily(x)
+  x <- as_matrix_greedily(x)
   x <- scale(x) # hclust and heatmaps only make sense with normed data
   distance <- dist(x, method = distance_metric)
   hc <- hclust(distance, method = cluster_method)
