@@ -19,11 +19,13 @@
 #' @param timestamps a vector of POSIXct
 #' @keywords timestamp activity
 #' @export timelist_to_difference
+#' @return dataframe, with first column called 'intervals'
 #' @family timelist
+#' @inherit as.duration
 #' @examples
 #' testTimes <- as.POSIXlt.POSIXct(sample(10000000:11100000 , 100, replace = FALSE))
 #' timelist_to_difference(testTimes)
-timelist_to_difference <- function(timestamps, ...) {
+timelist_to_difference <- function(timestamps) {
   # This function could use some optimisation
   l = length(timestamps)
   timestamps <- as.numeric(timestamps)
@@ -33,10 +35,10 @@ timelist_to_difference <- function(timestamps, ...) {
   }
   if (min(output) == 0) {
     next_min <- min(output[output > 0])
-    output <- c(output[output > 0], rep(next_min, length(output[output == 0])))
+    output <- c(output[output > 0], rep(next_min * 0.5, length(output[output == 0])))
   }
   output <- as.duration(abs(output))
-  return(data.frame(intervals = output, ...))
+  return(output)
 }
 
 #' timelist_to_difference_assembler
@@ -48,8 +50,8 @@ timelist_to_difference <- function(timestamps, ...) {
 #' @export timelist_to_difference_assembler
 #' @examples
 #' aa <- data.frame(ids = rep(c(1,2,3,4),25), ts = as.POSIXlt.POSIXct(sample(10000000:11100000 , 100, replace = FALSE)))
-#'
-timelist_to_difference_assembler <- function(timestamps, ids) {
+#' timelist_to_difference_assembler(aa$ts, aa$ids)
+timelist_to_difference_assembler <- function(df, timestamp_var = "timestamp", id_vars = NULL) {
   df <- data.frame(timestamp = timestamps, id = ids)
   u_ids <- unique(ids)
   output <- data.frame()
@@ -72,7 +74,7 @@ timelist_to_difference_assembler <- function(timestamps, ids) {
 #' @param ... Extra parameters passed to the geom_density geom
 #' @keywords plot spectrum histogram time frequency
 #' @export plot_timestamp_spectrum
-plot_timestamp_spectrum <- function(df, trans = 'log10', ...) {
+plot_timestamp_spectrum <- function(df, trans = 'log10', group = NULL, color = NULL, ...) {
   # This function could use some optimisation
   if("intervals" %!in% names(df)) stop("No column named 'intervals' in data frame")
   df$intervals = as.numeric(df$intervals) # Histogram didn't like date types
@@ -81,7 +83,7 @@ plot_timestamp_spectrum <- function(df, trans = 'log10', ...) {
     filter(intervals > 0) # ignoring 0 duration events
 
   g <- ggplot(data = df, aes(x = intervals, colour = intervals)) +
-    geom_density(aes(...)) +
+    geom_density(aes(group = !!enquo(group), color = !!enquo(color)), ...) +
     scale_x_continuous(name = "Interval",
                        trans = trans,
                        breaks = c(0,1,60, 60*60, 60*60*24, 60*60*24*7, 60*60*24*7*52/12.0, 60*60*24*7*26),

@@ -53,3 +53,49 @@ dendrogram_lakit <- function(x, cluster_method = "average", distance_metric = "e
 # explore dendrogram replace with a vignette using:
 # par(mfrow = c(2,3))
 # then repeated application of dendrogram_lakit
+
+
+#' add_edge_layer
+#'
+#' Adds additional edges to a graph, with a binary variable to identify the new edges.
+#' Returns a graph object with edge attribute 'add' which is TRUE or FALSE.
+#' The idea is that a first edge list generates the structure for
+#' the nodes, and then a second edge list is plotted alongside these
+#' original edges. All the nodes should be specified in a single node list
+#' @param graph a tidygraph object
+#' @param edges_add a df of the edges to be added to the network. Should not add additional nodes and have the same edge attributes.
+#' @export add_edge_layer
+#'
+#' @examples
+#'
+#' set.seed(123)
+#' nds <- data.frame(id = 1:6)
+#' egs1 <- data.frame(from = 1:6, to = sample(1:6, 6, replace = TRUE))
+#' egs2 <- data.frame(from = 1:4, to = sample(1:6, 4, replace = TRUE))
+#'
+#' # plotting base network
+#' base_graph <- tbl_graph(nodes = nds, edges = egs1)
+#' lyt <- create_layout(base_graph, layout = 'nicely')
+#' ggraph(base_graph, layout = 'manual', node.positions = lyt) +
+#'   geom_node_point() +
+#'   geom_edge_link() +
+#'   theme_graph()
+#'
+#' # plotting extra layer
+#' new_graph <- base_graph %>%
+#'   add_edge_layer(edges_add = egs2)
+#' ggraph(new_graph, layout = 'manual', node.positions = lyt) +
+#'   geom_node_point(aes(x = lyt$x, y = lyt$y)) +
+#'   geom_edge_link(aes(edge_linetype = add)) +
+#'   theme_graph()
+
+add_edge_layer <- function(graph, edges_add) {
+  old_nodes <- graph %>% activate(nodes) %>% as.data.frame()
+  old_edges <- graph %>% activate(edges) %>% as.data.frame()
+  old_edges <- old_edges %>% mutate(add = FALSE)
+  add_edges <- edges_add %>% mutate(add = TRUE)
+  new_edges <- rbind(old_edges, add_edges)
+  new_graph <- tbl_graph(nodes = old_nodes, edges = new_edges)
+  return(new_graph)
+}
+
