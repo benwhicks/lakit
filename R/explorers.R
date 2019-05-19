@@ -68,7 +68,7 @@ dendrogram_lakit <- function(x, cluster_method = "average", distance_metric = "e
 #'
 #' @examples
 #'
-#' set.seed(123)
+#' set.seed(1)
 #' nds <- data.frame(id = 1:6)
 #' egs1 <- data.frame(from = 1:6, to = sample(1:6, 6, replace = TRUE))
 #' egs2 <- data.frame(from = 1:4, to = sample(1:6, 4, replace = TRUE))
@@ -82,20 +82,17 @@ dendrogram_lakit <- function(x, cluster_method = "average", distance_metric = "e
 #'   theme_graph()
 #'
 #' # plotting extra layer
-#' new_graph <- base_graph %>%
-#'   add_edge_layer(edges_add = egs2)
+#' new_graph <- add_edge_layer(base_graph, egs2)
 #' ggraph(new_graph, layout = 'manual', node.positions = lyt) +
 #'   geom_node_point(aes(x = lyt$x, y = lyt$y)) +
 #'   geom_edge_link(aes(edge_linetype = add)) +
 #'   theme_graph()
-
 add_edge_layer <- function(graph, edges_add) {
   old_nodes <- graph %>% activate(nodes) %>% as.data.frame()
   old_edges <- graph %>% activate(edges) %>% as.data.frame()
   old_edges <- old_edges %>% mutate(add = FALSE)
   add_edges <- edges_add %>% mutate(add = TRUE)
-  new_edges <- rbind(old_edges, add_edges)
+  new_edges <- bind_rows(old_edges, add_edges)
   new_graph <- tbl_graph(nodes = old_nodes, edges = new_edges)
   return(new_graph)
 }
-
