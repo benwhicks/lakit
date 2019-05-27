@@ -95,4 +95,33 @@ best_bet <- function(candidates) {
     }
 }
 
+#' intervals
+#'
+#' Function that takes a numeric vector and outputs
+#' the difference between each succsessive member.
+#' It also needs to know where to place a 0 - either at the
+#' end of the vector (matching each difference with where it
+#' left from) or at the beginning of the vector (matching each
+#' difference with where it goes to).
+#'
+#' @param x a numeric vector (can be dates, etc)
+#' @param end_at_0 decision on where to place the 0 to return vector of the same length.
+#' Defaults to TRUE, indicating the output matches with where the element is
+#' leaving from.
+#' @param sub_0 What this places for the end_at_0 parameter. Defaults to 0
+#' @export
+#' @examples
+#'
+#' v <- c(1,2,3)
+#' intervals(v)
+#' intervals(v, FALSE)
+#' intervals(v, TRUE, NA)
+intervals <- function(x, end_at_0 = TRUE, sub_0 = 0) {
+  if (end_at_0) {
+    output <- c(x[2 : length(x)] -  x[1: (length(x) - 1)], sub_0)
+  } else {
+    output <- c(sub_0, x[2 : length(x)] -  x[1: (length(x) - 1)])
+  }
+  return(output)
+}
 

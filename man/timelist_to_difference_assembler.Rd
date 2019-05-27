@@ -4,7 +4,8 @@
 \alias{timelist_to_difference_assembler}
 \title{timelist_to_difference_assembler}
 \usage{
-timelist_to_difference_assembler(timestamps, ids)
+timelist_to_difference_assembler(df, timestamp_var = "timestamp",
+  id_vars = NULL)
 }
 \arguments{
 \item{timestamps}{a vector of timestamp}
@@ -16,7 +17,7 @@ timelist_to_difference_assembler
 }
 \examples{
 aa <- data.frame(ids = rep(c(1,2,3,4),25), ts = as.POSIXlt.POSIXct(sample(10000000:11100000 , 100, replace = FALSE)))
-
+timelist_to_difference_assembler(aa$ts, aa$ids)
 }
 \seealso{
 Other timelist: \code{\link{timelist_to_difference}}

@@ -4,7 +4,8 @@
 \alias{plot_timestamp_spectrum}
 \title{plot_timestamp_spectrum}
 \usage{
-plot_timestamp_spectrum(df, trans = "log10", ...)
+plot_timestamp_spectrum(df, trans = "log10", group = NULL,
+  color = NULL, ...)
 }
 \arguments{
 \item{df}{a data frame that contains at least 1 column called 'intervals' of duration type}

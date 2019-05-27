@@ -4,10 +4,13 @@
 \alias{timelist_to_difference}
 \title{timelist_to_difference function}
 \usage{
-timelist_to_difference(timestamps, ...)
+timelist_to_difference(timestamps)
 }
 \arguments{
 \item{timestamps}{a vector of POSIXct}
+}
+\value{
+dataframe, with first column called 'intervals'
 }
 \description{
 This function converts a vector of timestamps (POSIXct/lt)
