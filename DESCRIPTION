@@ -17,6 +17,7 @@ Imports:
     gplots,
     dendextend,
     tidygraph,
-    ggraph
+    ggraph,
+    stringr
 Suggests: 
     testthat (>= 2.1.0)

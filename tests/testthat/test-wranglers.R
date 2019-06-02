@@ -21,3 +21,18 @@ test_that("best bet works", {
   expect_equal(best_bet(list(NA, 2, 4.6, "This long sentence")), "This long sentence")
   expect_equal(best_bet(list(5, 2)), 3.5)
 })
+
+test_that("switch name style works", {
+  expect_equal(switch_name_style("Boris Johnson"), "Johnson, Boris")
+  expect_equal(switch_name_style("Putin, Vladimir"), "Vladimir Putin")
+  expect_equal(switch_name_style("Boris von Johnson"), "von Johnson, Boris")
+  expect_equal(switch_name_style("van der Putin, Vlad"), "Vlad van der Putin")
+})
+
+test_that("switch name style works on vectors", {
+  expect_equal(switch_name_style(
+    c("Bob the Builder", "Wyatt Earp")),
+    c("the Builder, Bob", "Earp, Wyatt"))
+  expect_equal(switch_name_style(c("Potter, Harry", "von Doom, Victor")),
+               c("Harry Potter", "Victor von Doom"))
+})
