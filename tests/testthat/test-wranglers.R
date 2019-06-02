@@ -22,17 +22,33 @@ test_that("best bet works", {
   expect_equal(best_bet(list(5, 2)), 3.5)
 })
 
-test_that("switch name style works", {
-  expect_equal(switch_name_style("Boris Johnson"), "Johnson, Boris")
-  expect_equal(switch_name_style("Putin, Vladimir"), "Vladimir Putin")
-  expect_equal(switch_name_style("Boris von Johnson"), "von Johnson, Boris")
-  expect_equal(switch_name_style("van der Putin, Vlad"), "Vlad van der Putin")
+test_that("str name to first last works", {
+  expect_equal(str_name_to_first_last("Putin, Vladimir"), "Vladimir Putin")
+  expect_equal(str_name_to_first_last("van der Putin, Vlad"), "Vlad van der Putin")
 })
 
-test_that("switch name style works on vectors", {
-  expect_equal(switch_name_style(
+test_that("str name to last first works", {
+  expect_equal(str_name_to_last_first("Boris Johnson"), "Johnson, Boris")
+  expect_equal(str_name_to_last_first("Boris von Johnson"), "von Johnson, Boris")
+})
+
+test_that("str name to first last works on vectors", {
+  expect_equal(
+    str_name_to_first_last(c("Potter, Harry", "von Doom, Victor")),
+    c("Harry Potter", "Victor von Doom"))
+})
+
+test_that("str name to last first works on vectors", {
+  expect_equal(str_name_to_last_first(
     c("Bob the Builder", "Wyatt Earp")),
     c("the Builder, Bob", "Earp, Wyatt"))
-  expect_equal(switch_name_style(c("Potter, Harry", "von Doom, Victor")),
-               c("Harry Potter", "Victor von Doom"))
+})
+
+# Could be improved to handle middle names as well.
+
+test_that("str_to_name works", {
+  expect_equal(str_to_name("connor mcGregoR"), "Connor McGregor")
+  expect_equal(str_to_name("VICTOR von doom"), "Victor von Doom")
+  expect_equal(str_to_name("Bob van der Wilde"), "Bob van der Wilde")
+  expect_equal(str_to_name("liam o'connor"), "Liam O'Connor")
 })
