@@ -129,7 +129,7 @@ intervals <- function(x, end_at_0 = TRUE, sub_0 = 0) {
 # if you apply it twice it reverts back and that is confusing.
 # Maybe make to_firstname_lastname and to_lastname_firstname instead.
 
-#' switch name style
+#' str_name_to_first_last
 #'
 #' Switches Lastname, Firstname to Firstname Lastname or back.
 #' Uses presence of "," to determine which way to go
@@ -142,16 +142,28 @@ intervals <- function(x, end_at_0 = TRUE, sub_0 = 0) {
 #' switch_name_style("Teresa May")
 #' switch_name_style("Trump, Donald")
 #'
-switch_name_style <- function(x) {
-  if (x %>% stringr::str_detect(",")) {
-    s <- stringr::str_split(x, ", ")
-    Firstnames <- lapply(s, function(x)x[-1])
-    Lastnames <- lapply(s, function(x)x[1])
-    return(paste(Firstnames, Lastnames))
-  } else {
-    s <- stringr::str_split(x, " ")
-    Firstnames <- lapply(s, function(x)x[1])
-    Lastnames <- paste(lapply(s, function(x)x[2:length(x)]), collapse = " ")
-    return(paste0(Lastnames, ", ", Firstnames))
-  }
+str_name_to_first_last <- function(x) {
+  s <- stringr::str_split(x, ", ")
+  Firstnames <- lapply(s, function(x)x[-1])
+  Lastnames <- lapply(s, function(x)x[1])
+  return(paste(Firstnames, Lastnames))
 }
+
+#' str name to last first
+#'
+#' Takes a name in the format Firstname Lastname
+#' and converts to Lastname, Firstname
+#'
+#' @param x string of names
+#'
+#' @return string vector
+#' @export
+#'
+#' @examples
+str_name_to_last_first <- function(x, sep = ", ") {
+  s <- stringr::str_split(x, " ")
+  Firstnames <- lapply(s, function(x)x[1])
+  Lastnames <- paste(lapply(s, function(x)x[2:length(x)]), collapse = " ")
+  return(paste0(Lastnames, ", ", Firstnames))
+}
+
