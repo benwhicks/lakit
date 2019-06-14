@@ -106,17 +106,26 @@ plot_timestamp_spectrum <- function(df, trans = 'log10', group = NULL, color = N
 #' The defaults have been setup to work with Blackboard DDA report data, hence some of the strange names.
 #' @param aa dataframe of activity data. Must include column names corresponding to the other params
 #' @param max_time_interval The cutoff for duration of any session (duration data type, accepts recognised strings). Any session registering above this is filtered out as it is likely to be someone just logging in and then walking away. Defaults to 2 days.
+#' @param by_week Boolean. TRUE if 'week' field is to be grouped by as well. Currently groups by subject_code as well because I am too lazy to code this seperately.
 #' @keywords activity accumulator aa log summary user
 #' @export aa_summary_by_user
 aa_summary_by_user <- function(aa,
-                             max_time_interval = "2 days") {
+                             max_time_interval = "2 days",
+                             by_week = FALSE) {
   if ("id" %!in% names(aa)) return("id field not in names of data frame")
   if ("session" %!in% names(aa)) return("session field not in names of data frame")
   if ("timestamp" %!in% names(aa)) return("timestamp field not in names of data frame")
 
   aa_sorted <- aa %>%
-    filter(!is.na(id), as.numeric(session) > 0) %>%
-    select(id, session, timestamp) %>% # selecting only what is required
+    filter(!is.na(id), as.numeric(session) > 0)
+  if (by_week) {
+    aa_sorted <- aa_sorted %>%
+      select(id, session, timestamp, subject_code, week)
+  } else {
+    aa_sorted <- aa_sorted %>%
+      select(id, session, timestamp)
+  }
+  aa_sorted <- aa_sorted %>%
     arrange(id, session, timestamp) # needs to be in order for duration calculations
 
   aa_sorted$duration <- c(aa_sorted$timestamp[2:nrow(aa_sorted)] - aa_sorted$timestamp[1:(nrow(aa_sorted)-1)],0)
@@ -124,10 +133,18 @@ aa_summary_by_user <- function(aa,
   aa_sorted <- aa_sorted %>% mutate(duration = as.numeric(duration) * same_session) # in seconds
   aa_sorted$same_session <- NULL
 
-  user_summary <- aa_sorted %>%
-    select(id, session, duration) %>%
-    group_by(id, session) %>%
-    summarise(clicks = n(),
+  if (by_week) {
+    aa_grouped <- aa_sorted %>%
+      select(id, session, duration, week, subject_code) %>%
+      group_by(id, session, week, subject_code)
+  } else {
+    aa_grouped <- aa_sorted %>%
+      select(id, session, duration) %>%
+      group_by(id, session)
+  }
+
+  user_summary <- aa_grouped %>%
+      summarise(clicks = n(),
               time = sum(duration)) %>%
     filter(as.duration(time) < as.duration(max_time_interval)) %>%
     summarise(accesses = n(),

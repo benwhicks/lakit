@@ -167,3 +167,21 @@ str_name_to_last_first <- function(x, sep = ", ") {
   return(paste0(Lastnames, ", ", Firstnames))
 }
 
+#' names difference
+#'
+#' Looks at what names in one data frame are
+#' not in the names of another data frame
+#'
+#' @param x a data frame
+#' @param y a data frame
+#' @return a character vector
+#' @export
+#'
+#' @examples
+#'
+#' x <- data.frame(A = 1:3, B = 9:11)
+#' y <- data.frame(A = 1:10, C = 11:20)
+#' namdiff(x, y)
+namdiff <- function(x, y) {
+  setdiff(names(x), names(y))
+}
