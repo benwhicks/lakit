@@ -4,14 +4,12 @@
 \alias{aa_summary_by_user}
 \title{aa_summary_by_user}
 \usage{
-aa_summary_by_user(aa, max_time_interval = "2 days", by_week = FALSE)
+aa_summary_by_user(aa, max_time_interval = "2 days")
 }
 \arguments{
 \item{aa}{dataframe of activity data. Must include column names corresponding to the other params}
 
 \item{max_time_interval}{The cutoff for duration of any session (duration data type, accepts recognised strings). Any session registering above this is filtered out as it is likely to be someone just logging in and then walking away. Defaults to 2 days.}
-
-\item{by_week}{Boolean. TRUE if 'week' field is to be grouped by as well.}
 }
 \description{
 This summarises 'activity' data, according to the fields:

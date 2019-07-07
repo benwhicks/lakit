@@ -167,6 +167,25 @@ str_name_to_last_first <- function(x, sep = ", ") {
   return(paste0(Lastnames, ", ", Firstnames))
 }
 
+#' str name trim preferred
+#'
+#' Removes any text within ()
+#' Used to remove preferred names in name data, e.g.
+#' Robert (Bob) Johnson should become Robert Johnson
+#' The space from before the ( is removed as well.
+#'
+#' @param x a string
+#'
+#' @return string vector
+#' @export
+#'
+#' @examples
+#' str_name_trim_pref("Robert (Bob) Johnson")
+str_name_trim_pref <- function(x) {
+  return(stringr::str_remove(x,
+                             pattern = " \\(.*\\)"))
+}
+
 #' names difference
 #'
 #' Looks at what names in one data frame are

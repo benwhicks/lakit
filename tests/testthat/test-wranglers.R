@@ -52,3 +52,8 @@ test_that("str_to_name works", {
   expect_equal(str_to_name("Bob van der Wilde"), "Bob van der Wilde")
   expect_equal(str_to_name("liam o'connor"), "Liam O'Connor")
 })
+
+test_that("str_name_trim_pref works", {
+  expect_equal(str_name_trim_pref("Donald Trump"), "Donald Trump")
+  expect_equal(str_name_trim_pref("Donald (Fukwit) Trump"), "Donald Trump")
+})
