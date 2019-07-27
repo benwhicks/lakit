@@ -18,6 +18,7 @@ Imports:
     dendextend,
     tidygraph,
     ggraph,
-    stringr
+    stringr,
+    knitr
 Suggests: 
     testthat (>= 2.1.0)

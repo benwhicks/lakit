@@ -23,23 +23,36 @@
 #' @family timelist
 #' @inherit as.duration
 #' @examples
-#' testTimes <- as.POSIXlt.POSIXct(sample(10000000:11100000 , 100, replace = FALSE))
+#' testTimes <- as.POSIXlt.POSIXct(sample(10000000:11100000 , 1000, replace = FALSE))
 #' timelist_to_difference(testTimes)
 timelist_to_difference <- function(timestamps) {
-  # This function could use some optimisation
-  l = length(timestamps)
-  timestamps <- as.numeric(timestamps)
-  output <- NULL
-  for (n in 1:(l - 1)) {
-    output <- append(output, timestamps[n] - timestamps[(n + 1):l])
+  n <- length(timestamps)
+  M <- matrix(rep(as.numeric(timestamps), n), ncol = n, nrow = n)
+  M_diff <- M - t(M)
+  diff <- abs(M_diff[upper.tri(M_diff, diag = FALSE)])
+  if (min(diff) == 0) {
+    next_min <- min(diff[diff > 0])
+    diff <- c(diff[diff > 0], rep(next_min * 0.5, length(diff[diff == 0])))
   }
-  if (min(output) == 0) {
-    next_min <- min(output[output > 0])
-    output <- c(output[output > 0], rep(next_min * 0.5, length(output[output == 0])))
-  }
-  output <- as.duration(abs(output))
+  output <- lubridate::as.duration(diff)
   return(output)
 }
+
+# old_timelist_to_difference <- function(timestamps) {
+#   # This function could use some optimisation
+#   l = length(timestamps)
+#   timestamps <- as.numeric(timestamps)
+#   output <- NULL
+#   for (n in 1:(l - 1)) {
+#     output <- append(output, timestamps[n] - timestamps[(n + 1):l])
+#   }
+#   if (min(output) == 0) {
+#     next_min <- min(output[output > 0])
+#     output <- c(output[output > 0], rep(next_min * 0.5, length(output[output == 0])))
+#   }
+#   output <- as.duration(abs(output))
+#   return(output)
+# }
 
 #' timelist_to_difference_assembler
 #'
