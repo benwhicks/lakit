@@ -25,7 +25,7 @@ of the form: var = "value", as you might want to pass through an identifier
 such as a student id or content id with the table of differences for later use
 }
 \examples{
-testTimes <- as.POSIXlt.POSIXct(sample(10000000:11100000 , 100, replace = FALSE))
+testTimes <- as.POSIXlt.POSIXct(sample(10000000:11100000 , 1000, replace = FALSE))
 timelist_to_difference(testTimes)
 }
 \seealso{
