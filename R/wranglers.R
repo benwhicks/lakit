@@ -182,8 +182,9 @@ str_name_to_last_first <- function(x, sep = ", ") {
 #' @examples
 #' str_name_trim_pref("Robert (Bob) Johnson")
 str_name_trim_pref <- function(x) {
-  return(stringr::str_remove(x,
-                             pattern = " \\(.*\\)"))
+  x <- stringr::str_squish(stringr::str_remove(x,
+                           pattern = "\\(.*\\)"))
+  return(x)
 }
 
 #' names difference
@@ -203,4 +204,15 @@ str_name_trim_pref <- function(x) {
 #' namdiff(x, y)
 namdiff <- function(x, y) {
   setdiff(names(x), names(y))
+}
+
+#' str strip html
+#'
+#' Removes html tags and sundry to get text
+#'
+#' @param x string
+#' @return string
+#' @export
+str_strip_html <- function(x) {
+  return(rvest::html_text(xml2::read_html(x)))
 }

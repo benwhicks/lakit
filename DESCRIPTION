@@ -19,6 +19,8 @@ Imports:
     tidygraph,
     ggraph,
     stringr,
-    knitr
+    knitr,
+    rvest,
+    xml2
 Suggests: 
     testthat (>= 2.1.0)
