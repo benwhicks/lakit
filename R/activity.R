@@ -102,7 +102,6 @@ plot_timestamp_spectrum <- function(df, trans = 'log10', group = NULL, color = N
                        trans = trans,
                        breaks = c(0.1,1,10,60, 600, 60*60, 60*60*24, 60*60*24*7, 60*60*24*7*52/12.0, 60*60*24*7*26),
                        labels = c("0.1s","1s", "10s", "1m", "10m", "1h", "1d", "1w", "1M", "6M")) +
-    xmin(0.1)
     scale_y_continuous(name = "Amplitude") +
     theme_minimal() +
     theme(axis.line.y = element_blank(),
