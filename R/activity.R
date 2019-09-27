@@ -87,7 +87,7 @@ timelist_to_difference_assembler <- function(df, timestamp_var = "timestamp", id
 #' @param ... Extra parameters passed to the geom_density geom
 #' @keywords plot spectrum histogram time frequency
 #' @export plot_timestamp_spectrum
-plot_timestamp_spectrum <- function(df, trans = 'log10', group = NULL, color = NULL, ...) {
+plot_timestamp_spectrum <- function(df, trans = 'log10', group = NULL, color = NULL, lower_x_lim = 0.1, ...) {
   # This function could use some optimisation
   if("intervals" %!in% names(df)) stop("No column named 'intervals' in data frame")
   df$intervals = as.numeric(df$intervals) # Histogram didn't like date types
@@ -98,9 +98,11 @@ plot_timestamp_spectrum <- function(df, trans = 'log10', group = NULL, color = N
   g <- ggplot(data = df, aes(x = intervals)) +
     geom_density(aes(group = !!enquo(group), color = !!enquo(color)), ...) +
     scale_x_continuous(name = "Interval",
+                       limits = c(lower_x_lim, NA),
                        trans = trans,
                        breaks = c(0.1,1,10,60, 600, 60*60, 60*60*24, 60*60*24*7, 60*60*24*7*52/12.0, 60*60*24*7*26),
                        labels = c("0.1s","1s", "10s", "1m", "10m", "1h", "1d", "1w", "1M", "6M")) +
+    xmin(0.1)
     scale_y_continuous(name = "Amplitude") +
     theme_minimal() +
     theme(axis.line.y = element_blank(),
