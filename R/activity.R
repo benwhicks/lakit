@@ -95,7 +95,7 @@ plot_timestamp_spectrum <- function(df, trans = 'log10', group = NULL, color = N
   df <- df %>%
     filter(intervals > 0) # ignoring 0 duration events
 
-  g <- ggplot(data = df, aes(x = intervals, colour = intervals)) +
+  g <- ggplot(data = df, aes(x = intervals)) +
     geom_density(aes(group = !!enquo(group), color = !!enquo(color)), ...) +
     scale_x_continuous(name = "Interval",
                        trans = trans,
